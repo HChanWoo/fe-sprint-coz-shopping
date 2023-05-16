@@ -256,6 +256,7 @@ export default function Card({ cards }) {
         title={title}
         openObj={openObj}
       />
+
       {/* <Snackbar isAdd={true} /> */}
     </MainContainer>
   );
