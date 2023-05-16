@@ -3,16 +3,19 @@ import { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import BasicModal from "./BasicModal";
+import Snackbar from "./Snackbar";
 
 export default function Card({ cards }) {
   const MainContainer = tw.div`
     flex
     flex-wrap
+    min-h-[18rem]
 `;
   const CardContainer = tw.div`
     flex
     flex-col
     mr-6
+    mt-4
   `;
   const BgContainer = tw.div`
     w-[16.5rem]
@@ -21,9 +24,8 @@ export default function Card({ cards }) {
     rounded-xl
     relative
   `;
-  const Bookmark = tw.div`
+  const Bookmark = tw.button`
     absolute
-    inline-block
     bottom-3 right-3
     text-[#DFDFDF]
   `;
@@ -49,17 +51,44 @@ export default function Card({ cards }) {
 
   const [open, setOpen] = useState(false);
   const [imgUrl, setImgUrl] = useState("");
+  const [title, setTitle] = useState("");
+  const [openObj, setOpenObj] = useState({});
+  const [bookmark, setBookmark] = useState([]);
 
-  const handleClick = (url) => {
+  const handleClick = (url, title, obj) => {
     setOpen(true);
     setImgUrl(url);
+    setTitle(title);
+    setOpenObj(obj);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    getBookmark();
+  }, [open]);
+
+  const getBookmark = () => {
+    let local = localStorage.getItem("bookmark");
+    if (local !== null) setBookmark(JSON.parse(local));
+  };
+
+  const saveBookmark = (obj) => {
+    const itemIndex = bookmark.findIndex((item) => item.id === obj.id);
+    let updatedBookmark;
+    if (itemIndex === -1) {
+      updatedBookmark = [obj, ...bookmark];
+    } else {
+      updatedBookmark = bookmark.filter((item) => item.id !== obj.id);
+    }
+    setBookmark(updatedBookmark);
+    localStorage.setItem("bookmark", JSON.stringify(updatedBookmark));
+  };
+
   const makeCard = (card) => {
+    const isSelected = bookmark.findIndex((item) => item.id === card.id) !== -1;
     switch (card.type) {
       case "Exhibition":
         return (
@@ -70,10 +99,21 @@ export default function Card({ cards }) {
                 position: "relative",
                 cursor: "pointer",
               }}
-              onClick={() => handleClick(card.image_url)}
+              onClick={() => handleClick(card.image_url, card.title, card)}
             >
-              <Bookmark>
-                <StarOutlinedIcon sx={{ fontSize: "24px" }} />
+              <Bookmark
+                onClick={(e) => {
+                  e.stopPropagation();
+                  saveBookmark(card);
+                }}
+              >
+                {isSelected ? (
+                  <StarOutlinedIcon
+                    sx={{ fontSize: "24px", color: "yellow" }}
+                  />
+                ) : (
+                  <StarOutlinedIcon sx={{ fontSize: "24px" }} />
+                )}
               </Bookmark>
             </BgContainer>
             <TextContainer>
@@ -95,10 +135,21 @@ export default function Card({ cards }) {
                 position: "relative",
                 cursor: "pointer",
               }}
-              onClick={() => handleClick(card.image_url)}
+              onClick={() => handleClick(card.image_url, card.title, card)}
             >
-              <Bookmark>
-                <StarOutlinedIcon sx={{ fontSize: "24px" }} />
+              <Bookmark
+                onClick={(e) => {
+                  e.stopPropagation();
+                  saveBookmark(card);
+                }}
+              >
+                {isSelected ? (
+                  <StarOutlinedIcon
+                    sx={{ fontSize: "24px", color: "yellow" }}
+                  />
+                ) : (
+                  <StarOutlinedIcon sx={{ fontSize: "24px" }} />
+                )}
               </Bookmark>
             </BgContainer>
             <TextContainer>
@@ -108,9 +159,9 @@ export default function Card({ cards }) {
               </FirstCol>
               <SecondCol>
                 <p></p>
-                <pNum>
+                <p>
                   {card.price.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}원
-                </pNum>
+                </p>
               </SecondCol>
             </TextContainer>
           </CardContainer>
@@ -124,10 +175,23 @@ export default function Card({ cards }) {
                 position: "relative",
                 cursor: "pointer",
               }}
-              onClick={() => handleClick(card.brand_image_url)}
+              onClick={() =>
+                handleClick(card.brand_image_url, card.brand_name, card)
+              }
             >
-              <Bookmark>
-                <StarOutlinedIcon sx={{ fontSize: "24px" }} />
+              <Bookmark
+                onClick={(e) => {
+                  e.stopPropagation();
+                  saveBookmark(card);
+                }}
+              >
+                {isSelected ? (
+                  <StarOutlinedIcon
+                    sx={{ fontSize: "24px", color: "yellow" }}
+                  />
+                ) : (
+                  <StarOutlinedIcon sx={{ fontSize: "24px" }} />
+                )}
               </Bookmark>
             </BgContainer>
             <TextContainer>
@@ -137,7 +201,7 @@ export default function Card({ cards }) {
               </FirstCol>
               <SecondCol>
                 <p></p>
-                <pNum>{card.follower}</pNum>
+                <p>{card.follower}</p>
               </SecondCol>
             </TextContainer>
           </CardContainer>
@@ -151,10 +215,21 @@ export default function Card({ cards }) {
                 position: "relative",
                 cursor: "pointer",
               }}
-              onClick={() => handleClick(card.image_url)}
+              onClick={() => handleClick(card.image_url, card.title, card)}
             >
-              <Bookmark>
-                <StarOutlinedIcon sx={{ fontSize: "24px" }} />
+              <Bookmark
+                onClick={(e) => {
+                  e.stopPropagation();
+                  saveBookmark(card);
+                }}
+              >
+                {isSelected ? (
+                  <StarOutlinedIcon
+                    sx={{ fontSize: "24px", color: "yellow" }}
+                  />
+                ) : (
+                  <StarOutlinedIcon sx={{ fontSize: "24px" }} />
+                )}
               </Bookmark>
             </BgContainer>
             <TextContainer>
@@ -169,16 +244,19 @@ export default function Card({ cards }) {
     }
   };
 
-  useEffect(() => {
-    console.log(cards);
-  }, []);
-
   return (
     <MainContainer>
       {cards.map((x) => {
         return makeCard(x);
       })}
-      <BasicModal open={open} handleClose={handleClose} imgUrl={imgUrl} />
+      <BasicModal
+        open={open}
+        handleClose={handleClose}
+        imgUrl={imgUrl}
+        title={title}
+        openObj={openObj}
+      />
+      {/* <Snackbar isAdd={true} /> */}
     </MainContainer>
   );
 }
