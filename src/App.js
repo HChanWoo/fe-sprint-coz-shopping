@@ -1,22 +1,29 @@
 import tw from "tailwind-styled-components";
 import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Main from "./page/Main";
+import BookMark from "./page/BookMark";
+import ProductList from "./page/ProductList";
 import "./App.css";
 
 function App() {
   const Container = tw.div`
-    flex
-    items-center
-    justify-center
-    flex-col
     w-full
-    bg-indigo-600
+    h-full
 `;
   return (
     <div className="App">
       <Container>
-        <div>Use the Container as any other React Component</div>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/products/list" element={<ProductList />} />
+          <Route path="/bookmark" element={<BookMark />} />
+        </Routes>
+        <Footer />
       </Container>
-      <header className="App-header"></header>
     </div>
   );
 }
