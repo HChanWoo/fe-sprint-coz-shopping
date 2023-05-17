@@ -17,25 +17,47 @@ export default function ProductList() {
 
   const [ref, inView] = useInView();
 
-  const categoryList = [
-    { title: "전체", type: "All", img_url: "/product_all.svg" },
-    { title: "상품", type: "Product", img_url: "/product_product.svg" },
-    { title: "카테고리", type: "Category", img_url: "/product_category.svg" },
-    { title: "기획전", type: "Exhibition", img_url: "/product_exhibition.svg" },
-    { title: "브랜드", type: "Brand", img_url: "/product_brand.svg" },
-  ];
+  const categoryType = {
+    ALL: { id: 1, title: "전체", type: "All", img_url: "/product_all.svg" },
+    PRODUCT: {
+      id: 2,
+      title: "상품",
+      type: "Product",
+      img_url: "/product_product.svg",
+    },
+    CATEGORY: {
+      id: 3,
+      title: "카테고리",
+      type: "Category",
+      img_url: "/product_category.svg",
+    },
+    EXHIBITION: {
+      id: 4,
+      title: "기획전",
+      type: "Exhibition",
+      img_url: "/product_exhibition.svg",
+    },
+    BRAND: {
+      id: 5,
+      title: "브랜드",
+      type: "Brand",
+      img_url: "/product_brand.svg",
+    },
+  };
+  const categoryKeys = Object.keys(categoryType);
 
   const CategoryContiner = () => {
     return (
       <CategoryContainer>
-        {categoryList.map((ele) => {
+        {categoryKeys.map((key) => {
+          const value = categoryType[key];
           return (
-            <Category onClick={() => setCategory(ele.type)}>
-              <img src={ele.img_url} alt="logo" />
-              {ele.type === category ? (
-                <SelectedP>{ele.title}</SelectedP>
+            <Category onClick={() => setCategory(value.type)}>
+              <img src={value.img_url} alt="logo" />
+              {value.type === category ? (
+                <SelectedP>{value.title}</SelectedP>
               ) : (
-                <p>{ele.title}</p>
+                <p>{value.title}</p>
               )}
             </Category>
           );
