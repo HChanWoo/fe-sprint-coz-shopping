@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
 import { MainContainer, Container, TitleP } from "../styles/MainStyles";
+import { Link } from "react-router-dom";
 
 export default function Main() {
   const [cards, setCards] = useState([]);
@@ -19,6 +20,10 @@ export default function Main() {
     getBookmark();
   }, []);
 
+  useEffect(() => {
+    getBookmark();
+  }, [bookmark]);
+
   const getBookmark = () => {
     let local = localStorage.getItem("bookmark");
     if (local !== null) setBookmark(JSON.parse(local));
@@ -27,11 +32,15 @@ export default function Main() {
   return (
     <MainContainer>
       <Container>
-        <TitleP>상품 리스트</TitleP>
+        <Link to="/products/list">
+          <TitleP>상품 리스트</TitleP>
+        </Link>
         <Card cards={cards} />
       </Container>
       <Container>
-        <TitleP>북마크 리스트</TitleP>
+        <Link to="/bookmark">
+          <TitleP>북마크 리스트</TitleP>
+        </Link>
         <Card cards={bookmark.slice(0, 4)} />
       </Container>
     </MainContainer>

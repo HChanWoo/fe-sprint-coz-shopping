@@ -7,10 +7,15 @@ import {
   Category,
   SelectedP,
 } from "../styles/ProductListStyles";
+import { useInView } from "react-intersection-observer";
 
 export default function ProductList() {
   const [cards, setCards] = useState([]);
   const [category, setCategory] = useState("All");
+  const [index, setIndex] = useState(0);
+  const [showCards, setShowCards] = useState([]);
+
+  const [ref, inView] = useInView();
 
   const categoryList = [
     { title: "전체", type: "All", img_url: "/product_all.svg" },
@@ -44,6 +49,7 @@ export default function ProductList() {
       .then((res) => res.json())
       .then((res) => {
         setCards(res);
+        setShowCards(res.slice(0, 10));
       });
   };
 
@@ -51,18 +57,37 @@ export default function ProductList() {
     getPopular();
   }, []);
 
+  useEffect(() => {
+    setIndex(0);
+    setShowCards(cards.filter((x) => x.type === category).slice(0, 10));
+  }, [category]);
+
+  useEffect(() => {
+    if (inView) {
+      category === "All"
+        ? setIndex((previous) => (previous + 10) % 100)
+        : setIndex((previous) => (previous + 10) % 25);
+      setShowCards((previous) => [
+        ...previous,
+        ...getCards(index, index + 10, category),
+      ]);
+    }
+  }, [inView]);
+
+  const getCards = (start, end, category) => {
+    if (category === "All") {
+      return cards.slice(start, end);
+    }
+    return cards.filter((x) => x.type === category).slice(start, end);
+  };
+
   return (
     <MainContainer>
       <CategoryContiner />
-      <Container>
-        {category === "All" ? (
-          <Card cards={cards.splice(0, 10)} />
-        ) : (
-          <Card
-            cards={cards.filter((x) => x.type === category).splice(0, 10)}
-          />
-        )}
+      <Container ref={ref}>
+        <Card cards={showCards} />
       </Container>
+      <div ref={ref} style={{ width: "100vw" }}></div>
     </MainContainer>
   );
 }

@@ -36,6 +36,10 @@ export default function Card({ cards }) {
     getBookmark();
   }, [open]);
 
+  useEffect(() => {
+    getBookmark();
+  }, []);
+
   const getBookmark = () => {
     let local = localStorage.getItem("bookmark");
     if (local !== null) setBookmark(JSON.parse(local));
@@ -222,8 +226,6 @@ export default function Card({ cards }) {
         title={title}
         openObj={openObj}
       />
-
-      {/* <Snackbar isAdd={true} /> */}
     </MainContainer>
   );
 }
