@@ -2,7 +2,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import BasicModal from "./BasicModal";
-import Snackbar from "./Snackbar";
 import {
   MainContainer,
   CardContainer,

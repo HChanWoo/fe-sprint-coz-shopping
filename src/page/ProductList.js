@@ -84,7 +84,7 @@ export default function ProductList() {
   return (
     <MainContainer>
       <CategoryContiner />
-      <Container ref={ref}>
+      <Container>
         <Card cards={showCards} />
       </Container>
       <div ref={ref} style={{ width: "100vw" }}></div>
