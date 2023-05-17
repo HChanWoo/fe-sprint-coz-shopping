@@ -8,12 +8,14 @@ import {
   SelectedP,
 } from "../styles/BookMarkStyles";
 import { useInView } from "react-intersection-observer";
+import Toast from "../components/Toast";
 
 export default function BookMark() {
   const [bookmark, setBookmark] = useState([]);
   const [category, setCategory] = useState("All");
   const [index, setIndex] = useState(0);
   const [showCards, setShowCards] = useState([]);
+  const [bookmarkUpdate, setBookmarkUpdate] = useState("");
 
   const [ref, inView] = useInView();
 
@@ -104,8 +106,9 @@ export default function BookMark() {
     <MainContainer>
       <CategoryContiner />
       <Container>
-        <Card cards={showCards} />
+        <Card cards={showCards} setBookmarkUpdate={setBookmarkUpdate} />
       </Container>
+      <Toast bookmarkUpdate={bookmarkUpdate} />
       <div ref={ref} style={{ width: "100vw" }}></div>
     </MainContainer>
   );

@@ -13,7 +13,7 @@ import {
   SecondCol,
 } from "../styles/CardStyles";
 
-export default function Card({ cards }) {
+export default function Card({ cards, setBookmarkUpdate }) {
   const [open, setOpen] = useState(false);
   const [imgUrl, setImgUrl] = useState("");
   const [title, setTitle] = useState("");
@@ -49,8 +49,10 @@ export default function Card({ cards }) {
     let updatedBookmark;
     if (itemIndex === -1) {
       updatedBookmark = [obj, ...bookmark];
+      setBookmarkUpdate(true);
     } else {
       updatedBookmark = bookmark.filter((item) => item.id !== obj.id);
+      setBookmarkUpdate(false);
     }
     setBookmark(updatedBookmark);
     localStorage.setItem("bookmark", JSON.stringify(updatedBookmark));
