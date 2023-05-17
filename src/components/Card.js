@@ -44,7 +44,7 @@ export default function Card({ cards }) {
     if (local !== null) setBookmark(JSON.parse(local));
   };
 
-  const saveBookmark = (obj) => {
+  const updatedBookmark = (obj) => {
     const itemIndex = bookmark.findIndex((item) => item.id === obj.id);
     let updatedBookmark;
     if (itemIndex === -1) {
@@ -73,7 +73,7 @@ export default function Card({ cards }) {
               <Bookmark
                 onClick={(e) => {
                   e.stopPropagation();
-                  saveBookmark(card);
+                  updatedBookmark(card);
                 }}
               >
                 {isSelected ? (
@@ -109,7 +109,7 @@ export default function Card({ cards }) {
               <Bookmark
                 onClick={(e) => {
                   e.stopPropagation();
-                  saveBookmark(card);
+                  updatedBookmark(card);
                 }}
               >
                 {isSelected ? (
@@ -151,7 +151,7 @@ export default function Card({ cards }) {
               <Bookmark
                 onClick={(e) => {
                   e.stopPropagation();
-                  saveBookmark(card);
+                  updatedBookmark(card);
                 }}
               >
                 {isSelected ? (
@@ -189,7 +189,7 @@ export default function Card({ cards }) {
               <Bookmark
                 onClick={(e) => {
                   e.stopPropagation();
-                  saveBookmark(card);
+                  updatedBookmark(card);
                 }}
               >
                 {isSelected ? (
