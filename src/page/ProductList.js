@@ -52,7 +52,7 @@ export default function ProductList() {
         {categoryKeys.map((key) => {
           const value = categoryType[key];
           return (
-            <Category onClick={() => setCategory(value.type)}>
+            <Category onClick={() => setCategory(value.type)} key={value.id}>
               <img src={value.img_url} alt="logo" />
               {value.type === category ? (
                 <SelectedP>{value.title}</SelectedP>

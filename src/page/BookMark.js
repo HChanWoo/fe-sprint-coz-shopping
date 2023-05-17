@@ -52,7 +52,7 @@ export default function BookMark() {
         {categoryKeys.map((key) => {
           const value = categoryType[key];
           return (
-            <Category onClick={() => setCategory(value.type)}>
+            <Category onClick={() => setCategory(value.type)} key={value.id}>
               <img src={value.img_url} alt="logo" />
               {value.type === category ? (
                 <SelectedP>{value.title}</SelectedP>
@@ -69,7 +69,7 @@ export default function BookMark() {
   const getBookmark = () => {
     let local = localStorage.getItem("bookmark");
     if (local !== null) {
-      setBookmark((prevBookmark) => JSON.parse(local));
+      setBookmark(JSON.parse(local));
       setShowCards(bookmark.slice(0, 10));
     }
   };

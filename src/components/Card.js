@@ -61,7 +61,7 @@ export default function Card({ cards }) {
     switch (card.type) {
       case "Exhibition":
         return (
-          <CardContainer>
+          <CardContainer key={card.id}>
             <BgContainer
               style={{
                 backgroundImage: `url(${card.image_url})`,
@@ -97,7 +97,7 @@ export default function Card({ cards }) {
         );
       case "Product":
         return (
-          <CardContainer>
+          <CardContainer key={card.id}>
             <BgContainer
               style={{
                 backgroundImage: `url(${card.image_url})`,
@@ -137,7 +137,7 @@ export default function Card({ cards }) {
         );
       case "Brand":
         return (
-          <CardContainer>
+          <CardContainer key={card.id}>
             <BgContainer
               style={{
                 backgroundImage: `url(${card.brand_image_url})`,
@@ -177,7 +177,7 @@ export default function Card({ cards }) {
         );
       case "Category":
         return (
-          <CardContainer>
+          <CardContainer key={card.id}>
             <BgContainer
               style={{
                 backgroundImage: `url(${card.image_url})`,
