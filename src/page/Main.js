@@ -24,7 +24,7 @@ export default function Main() {
   `;
 
   const [cards, setCards] = useState([]);
-  const [bookmark, setBookmark] = React.useState([]);
+  const [bookmark, setBookmark] = useState([]);
 
   const getPopular = () => {
     fetch(`http://cozshopping.codestates-seb.link/api/v1/products?count=4`)
@@ -34,15 +34,15 @@ export default function Main() {
       });
   };
 
-  useEffect(() => {
-    getPopular();
-    getBookmark();
-  }, []);
-
   const getBookmark = () => {
     let local = localStorage.getItem("bookmark");
     if (local !== null) setBookmark(JSON.parse(local));
   };
+
+  useEffect(() => {
+    getPopular();
+    getBookmark();
+  }, []);
 
   return (
     <MainContainer>

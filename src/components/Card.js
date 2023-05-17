@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import BasicModal from "./BasicModal";
-import Snackbar from "./Snackbar";
 
 export default function Card({ cards }) {
   const MainContainer = tw.div`
@@ -256,8 +255,6 @@ export default function Card({ cards }) {
         title={title}
         openObj={openObj}
       />
-
-      {/* <Snackbar isAdd={true} /> */}
     </MainContainer>
   );
 }

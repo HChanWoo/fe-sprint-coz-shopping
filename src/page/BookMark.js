@@ -64,7 +64,7 @@ export default function BookMark() {
 
   const getBookmark = () => {
     let local = localStorage.getItem("bookmark");
-    if (local !== null) setBookmark((prevBookmark) => JSON.parse(local));
+    if (local !== null) setBookmark(JSON.parse(local));
   };
 
   useEffect(() => {
