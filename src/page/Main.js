@@ -20,6 +20,10 @@ export default function Main() {
     getBookmark();
   }, []);
 
+  useEffect(() => {
+    getBookmark();
+  }, [bookmark]);
+
   const getBookmark = () => {
     let local = localStorage.getItem("bookmark");
     if (local !== null) setBookmark(JSON.parse(local));
