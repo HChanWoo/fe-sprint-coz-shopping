@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
 import {
   MainContainer,
@@ -85,11 +85,6 @@ export default function ProductList() {
     <MainContainer>
       <CategoryContiner />
       <Container ref={ref}>
-        {/* {category === "All" ? (
-          <Card cards={cards.slice(0, 10)} />
-        ) : (
-          <Card cards={cards.filter((x) => x.type === category).slice(0, 10)} />
-        )} */}
         <Card cards={showCards} />
       </Container>
       <div ref={ref} style={{ width: "100vw" }}></div>
