@@ -1,37 +1,14 @@
 import React, { useState, useEffect } from "react";
-import tw from "tailwind-styled-components";
 import Card from "../components/Card";
+import {
+  MainContainer,
+  Container,
+  CategoryContainer,
+  Category,
+  SelectedP,
+} from "../styles/BookMarkStyles";
 
 export default function BookMark() {
-  const MainContainer = tw.div`
-    w-full
-    ml-auto
-    flex
-    flex-wrap
-    px-16
-    justify-center
-  `;
-
-  const Continer = tw.div`
-    w-full
-    my-12
-  `;
-
-  const CategoryContainer = tw.div`
-    flex
-    mt-10
-    text-center
-  `;
-  const Category = tw.button`
-    mx-5
-    font-black
-  `;
-  const SelectedP = tw.p`
-    text-mainColor
-    inline-block
-    border-b-2 border-mainColor
-  `;
-
   const [bookmark, setBookmark] = useState([]);
   const [category, setCategory] = useState("All");
 
@@ -74,7 +51,7 @@ export default function BookMark() {
   return (
     <MainContainer>
       <CategoryContiner />
-      <Continer>
+      <Container>
         {category === "All" ? (
           <Card cards={bookmark.splice(0, 10)} />
         ) : (
@@ -82,7 +59,7 @@ export default function BookMark() {
             cards={bookmark.filter((x) => x.type === category).splice(0, 10)}
           />
         )}
-      </Continer>
+      </Container>
     </MainContainer>
   );
 }

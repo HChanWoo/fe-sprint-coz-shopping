@@ -1,28 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
-import tw from "tailwind-styled-components";
+import { MainContainer, Container, TitleP } from "../styles/MainStyles";
 
 export default function Main() {
-  const MainContainer = tw.div`
-    w-full
-    ml-auto
-    flex
-    flex-wrap
-    px-16
-    justify-center
-  `;
-
-  const Continer = tw.div`
-    w-full
-    mt-12 
-  `;
-
-  const TitleP = tw.p`
-    text-2xl
-    font-black
-    mb-4
-  `;
-
   const [cards, setCards] = useState([]);
   const [bookmark, setBookmark] = React.useState([]);
 
@@ -46,14 +26,14 @@ export default function Main() {
 
   return (
     <MainContainer>
-      <Continer>
+      <Container>
         <TitleP>상품 리스트</TitleP>
         <Card cards={cards} />
-      </Continer>
-      <Continer>
+      </Container>
+      <Container>
         <TitleP>북마크 리스트</TitleP>
         <Card cards={bookmark.slice(0, 4)} />
-      </Continer>
+      </Container>
     </MainContainer>
   );
 }

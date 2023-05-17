@@ -1,37 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
-import tw from "tailwind-styled-components";
+import {
+  MainContainer,
+  Container,
+  CategoryContainer,
+  Category,
+  SelectedP,
+} from "../styles/ProductListStyles";
 
 export default function ProductList() {
-  const MainContainer = tw.div`
-    w-full
-    ml-auto
-    flex
-    flex-wrap
-    px-16
-    justify-center
-  `;
-
-  const Continer = tw.div`
-    w-full
-    my-12
-  `;
-
-  const CategoryContainer = tw.div`
-    flex
-    mt-10
-    text-center
-  `;
-  const Category = tw.button`
-    mx-5
-    font-black
-  `;
-  const SelectedP = tw.p`
-    text-mainColor
-    inline-block
-    border-b-2 border-mainColor
-  `;
-
   const [cards, setCards] = useState([]);
   const [category, setCategory] = useState("All");
 
@@ -77,7 +54,7 @@ export default function ProductList() {
   return (
     <MainContainer>
       <CategoryContiner />
-      <Continer>
+      <Container>
         {category === "All" ? (
           <Card cards={cards.splice(0, 10)} />
         ) : (
@@ -85,7 +62,7 @@ export default function ProductList() {
             cards={cards.filter((x) => x.type === category).splice(0, 10)}
           />
         )}
-      </Continer>
+      </Container>
     </MainContainer>
   );
 }
