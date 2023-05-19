@@ -13,7 +13,7 @@ import {
   SecondCol,
 } from "../styles/CardStyles";
 
-export default function Card({ cards }) {
+export default function Card({ cards, setBookmarkUpdate }) {
   const [open, setOpen] = useState(false);
   const [imgUrl, setImgUrl] = useState("");
   const [title, setTitle] = useState("");
@@ -44,13 +44,15 @@ export default function Card({ cards }) {
     if (local !== null) setBookmark(JSON.parse(local));
   };
 
-  const saveBookmark = (obj) => {
+  const updatedBookmark = (obj) => {
     const itemIndex = bookmark.findIndex((item) => item.id === obj.id);
     let updatedBookmark;
     if (itemIndex === -1) {
       updatedBookmark = [obj, ...bookmark];
+      setBookmarkUpdate(true);
     } else {
       updatedBookmark = bookmark.filter((item) => item.id !== obj.id);
+      setBookmarkUpdate(false);
     }
     setBookmark(updatedBookmark);
     localStorage.setItem("bookmark", JSON.stringify(updatedBookmark));
@@ -61,7 +63,7 @@ export default function Card({ cards }) {
     switch (card.type) {
       case "Exhibition":
         return (
-          <CardContainer>
+          <CardContainer key={card.id}>
             <BgContainer
               style={{
                 backgroundImage: `url(${card.image_url})`,
@@ -73,7 +75,7 @@ export default function Card({ cards }) {
               <Bookmark
                 onClick={(e) => {
                   e.stopPropagation();
-                  saveBookmark(card);
+                  updatedBookmark(card);
                 }}
               >
                 {isSelected ? (
@@ -97,7 +99,7 @@ export default function Card({ cards }) {
         );
       case "Product":
         return (
-          <CardContainer>
+          <CardContainer key={card.id}>
             <BgContainer
               style={{
                 backgroundImage: `url(${card.image_url})`,
@@ -109,7 +111,7 @@ export default function Card({ cards }) {
               <Bookmark
                 onClick={(e) => {
                   e.stopPropagation();
-                  saveBookmark(card);
+                  updatedBookmark(card);
                 }}
               >
                 {isSelected ? (
@@ -137,7 +139,7 @@ export default function Card({ cards }) {
         );
       case "Brand":
         return (
-          <CardContainer>
+          <CardContainer key={card.id}>
             <BgContainer
               style={{
                 backgroundImage: `url(${card.brand_image_url})`,
@@ -151,7 +153,7 @@ export default function Card({ cards }) {
               <Bookmark
                 onClick={(e) => {
                   e.stopPropagation();
-                  saveBookmark(card);
+                  updatedBookmark(card);
                 }}
               >
                 {isSelected ? (
@@ -177,7 +179,7 @@ export default function Card({ cards }) {
         );
       case "Category":
         return (
-          <CardContainer>
+          <CardContainer key={card.id}>
             <BgContainer
               style={{
                 backgroundImage: `url(${card.image_url})`,
@@ -189,7 +191,7 @@ export default function Card({ cards }) {
               <Bookmark
                 onClick={(e) => {
                   e.stopPropagation();
-                  saveBookmark(card);
+                  updatedBookmark(card);
                 }}
               >
                 {isSelected ? (
