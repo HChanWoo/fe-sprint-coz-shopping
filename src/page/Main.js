@@ -29,7 +29,7 @@ export default function Main() {
 
   // useEffect(() => {
   //   getBookmark();
-  // }, [bookmark]);
+  // }, [bookmarkUpdate]);
 
   return (
     <MainContainer>
